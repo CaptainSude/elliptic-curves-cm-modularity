@@ -1,0 +1,677 @@
+% Standalone LaTeX source. Compile twice with pdfLaTeX.
+% Typeset from the source manuscript, dated 7 October 2026.
+% Source: https://chatgpt.com/space/page_d287e2f173b48191a4a4f6ac4abb49f2
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{newtxtext,newtxmath}
+\usepackage[a4paper,left=28mm,right=28mm,top=25mm,bottom=26mm,headheight=14pt,headsep=9mm,footskip=12mm]{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{bookmark}
+
+\definecolor{linkblue}{RGB}{30,64,103}
+\hypersetup{
+  pdftitle={Every Elliptic Curve over a CM Number Field Is Modular},
+  pdfsubject={Mathematical manuscript dated 7 October 2026},
+  colorlinks=true,
+  linkcolor=linkblue,
+  citecolor=linkblue,
+  urlcolor=linkblue,
+  bookmarksnumbered=true,
+  pdfdisplaydoctitle=true
+}
+\urlstyle{same}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\numberwithin{equation}{section}
+\setlist[enumerate]{leftmargin=*,label=\arabic*.,itemsep=3pt,topsep=6pt}
+\setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=6pt}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.7em}{}
+\titlespacing*{\section}{0pt}{3.2ex plus 1ex minus .2ex}{1.4ex plus .2ex}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{2.4ex plus .5ex minus .2ex}{.8ex plus .2ex}
+\setlength{\parindent}{1.3em}
+\setlength{\parskip}{0pt plus .4pt}
+\emergencystretch=1.5em
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\allowdisplaybreaks[1]
+\raggedbottom
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\footnotesize\scshape Elliptic curves over CM number fields}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+\begin{document}
+\thispagestyle{plain}
+\begin{center}
+{\LARGE\bfseries Every Elliptic Curve over a\\[3pt]
+CM Number Field Is Modular\par}
+\vspace{12pt}
+{\small 7 October 2026\par}
+\end{center}
+\vspace{5pt}
+
+
+\begin{abstract}
+We prove that every elliptic curve over a CM number field is modular. The proof combines the covering construction of OpenAI with a mod-5 automorphy lifting argument that retains a residually ramified Steinberg place. The local condition at this place excludes the exceptional cohomology classes for \(\mathrm{SL}_2(\mathbb F_5)\). Partial framing then supplies Taylor--Wiles presentations with the required dimension, while integral local--global compatibility imposes the same Steinberg condition on the Hecke-valued representations. A specialization of the covering family produces a modular auxiliary elliptic curve and three congruences, in characteristics \(p\), \(3\), and \(p\), connecting it to the original curve. The construction works over non-Galois CM fields and includes fields containing fifth roots of unity.
+\end{abstract}
+
+\section{Introduction}
+
+Modularity identifies the Galois representations of an elliptic curve with automorphic representations of \(\mathrm{GL}_2\). Over a CM field, automorphy lifting provides a way to propagate this correspondence through congruences. The problem is to construct a suitable starting curve and a sequence of congruences that preserves the necessary local conditions.
+
+The covering construction of OpenAI \cite{O} supplies such a sequence. Its character spaces connect an auxiliary elliptic curve to a quadratic twist of a prescribed curve. We combine this construction with a lifting argument that also applies when the base field contains \(\mu_5\).
+
+\begin{theorem}\label{thm:1.1}
+Every elliptic curve \(E\) over a CM number field \(K\) is modular. If \(E\) has no geometric complex multiplication, there is a regular algebraic cuspidal automorphic representation \(\pi_E\) of \(\mathrm{GL}_2(\mathbb A_K)\), of weight zero and with trivial unitary central character, whose compatible system is \(H^1(E)\). Its finite local parameters, in the cohomological normalization, agree with those of \(E\). In particular, its elliptic-normalized local \(L\)-factors and conductor agree with those of \(E\) at every finite place.
+
+If \(E\) has geometric complex multiplication, the corresponding automorphic representation is obtained from its Hecke characters. It is cuspidal when the endomorphisms are not all defined over \(K\); otherwise it is an isobaric sum of two characters.
+\end{theorem}
+
+The new arithmetic ingredient is Theorem~\ref{thm:4.2} below. Its residual image is \(\mathrm{SL}_2(\mathbb F_5)\), and the field contains \(\mu_5\). This is precisely the exceptional configuration excluded by the mod-5 clause of the usual lifting theorem \cite[Theorem~5.2]{CN}. We retain a place where inertia has nontrivial unipotent residual image. The Steinberg tangent condition there is the unramified line, whereas every nonzero exceptional finite-group cohomology class restricts to the ramified line. This removes the obstruction before Taylor--Wiles primes are chosen.
+
+The protected place belongs to an auxiliary curve, so the theorem imposes no restriction on the reduction of \(E\). The geometric family has a split multiplicative degeneration of width three. Specializing near it makes the auxiliary discriminant valuation prime to \(5\). At the same time, specialization near a different boundary preserves the reduction categories needed in the congruence argument.
+
+Here is the resulting chain. For a sufficiently large prime \(p\), let \(\eta\) and \(\psi\) have orders \(3\) and \(p\). Over \(K(\mu_{3p})\), the compatible systems satisfy
+\begin{equation*}
+V_\eta \equiv V_{\eta\psi}\pmod p,
+\qquad V_{\eta\psi}\equiv V_\psi\pmod3,
+\qquad V_\psi\equiv V_1\pmod p.
+\end{equation*}
+The first system is the cohomology of the auxiliary curve; the last is that of a quadratic twist of \(E\). The retained-Steinberg theorem makes the first system automorphic. Three applications of \cite[Theorem~5.2]{CN} give the last, and solvable descent returns to \(K\).
+
+\subsection*{Notation}
+
+A CM field is a totally imaginary quadratic extension of a totally real field. We write \(F^+\) for the maximal totally real subfield of \(F\) and \(c\) for complex conjugation. Let \(G_F\) denote the absolute Galois group of \(F\), \(\varepsilon_\ell\) its \(\ell\)-adic cyclotomic character, and \(q_v\) the cardinality of the residue field at a finite place \(v\).
+
+We use the cohomological normalization of \cite{CN}: \(H^1\) of an elliptic curve has determinant \(\varepsilon_\ell^{-1}\) and labelled Hodge--Tate weights \(\{0,1\}\). Automorphic representations of weight zero are normalized unitarily. We write \(r_\iota(\pi)\) for the associated Galois representation. Residual representations are semisimplified unless a lattice is specified.
+
+A residual representation in characteristic \(\ell\) is \emph{decomposed generic} if there is a rational prime \(q\), split completely in \(F\), at whose places it is unramified and has Frobenius eigenvalue ratio outside \(\{1,q,q^{-1}\}\). We will choose \(q\equiv1\) modulo \(\ell\), so distinct eigenvalues suffice. This agrees with \cite[Definition~2.1.27]{CN}.
+
+For a finite extension of \(\mathbb Q_5\), let \(\mathcal O\) be its ring of integers, \(\varpi\) a uniformizer, and \(k\) its residue field. All deformation problems below have fixed determinant \(\varepsilon_5^{-1}\). Framed local rings use \(\mathrm{GL}_2\) frames, including scalar frame directions.
+
+\section{The geometric congruence construction}
+
+Let \(E/K\) be an elliptic curve without geometric complex multiplication, written \(y^2=h(x)\). Choose a prime \(p>100\) and put \(n=3p\). Over a nonempty open subset \(U\) of the parameter line, set
+\begin{equation*}
+B_t:h(t)y^2=h(x),\qquad R_t=(t,1),\qquad S_t=[n]R_t.
+\end{equation*}
+The divisor \((S_t)-(-S_t)-n(R_t)+n(-R_t)\) is principal. Normalize its defining function \(f_t\) by \(f_t(O)=1\) and, for \(m\) dividing \(n\), form
+\begin{equation*}
+\operatorname{div}(f_t)=(S_t)-(-S_t)-n(R_t)+n(-R_t),
+\qquad C_m(t):Y^m=f_t(Z).
+\end{equation*}
+The involution \(w(Z,Y)=(-Z,Y^{-1})\) is defined over \(K\). Put \(A_t=\operatorname{Jac}(C_3(t)/\langle w\rangle)\). The construction, its compact-type degeneration, its integral homology, and its geometric monodromy are given in \cite[Lemma~3.1, Proposition~3.3, Proposition~4.2, and Theorem~4.5]{O}.
+
+\begin{proposition}\label{prop:2.1}
+Over \(F=K(\mu_n)\), every rotation character \(\theta\) defines a semisimple rank-two compatible system \(V_\theta\). It has determinant \(\varepsilon_\ell^{-1}\), labelled weights \(\{0,1\}\), and is potentially semistable above \(\ell\). Moreover, \(A_t\) is an elliptic curve and
+\begin{equation*}
+V_\eta\simeq H^1(A_t)|_{G_F},\qquad
+V_1\simeq H^1(B_t),
+\end{equation*}
+where \(\eta\) has order \(3\). The three congruences displayed in the introduction hold.
+\end{proposition}
+
+\begin{proof}
+The integral calculation of \cite[Proposition~4.2]{O} makes \(H^1(C_n,\mathbb Z_\ell)\) free of rank two over the rotation group ring. Thus every character space has dimension two. Cup product, composed with \(w\) in the second variable, gives an alternating perfect pairing on a character space with values in \(\mathbb Q_\ell(-1)\), proving the determinant assertion. The involution exchanges \(\theta\) and \(\theta^{-1}\), and Hodge decomposition gives one copy of each Hodge weight. Smooth proper geometry supplies finite ramification and potential semistability. Semisimplicity follows from Faltings \cite{F}, and the good-reduction trace formula supplies compatibility.
+
+The trivial rotation space is \(H^1(B_t)\). On \(C_3\), the involution acts as \(-1\) on this space and exchanges the two nontrivial character spaces. Its invariant space therefore has dimension two, identifying the quotient Jacobian with the stated endpoint.
+
+For the congruences, choose \(\mathcal O\) containing all character values and use the evaluation lattice
+\begin{equation*}
+T_\theta=H^1(C_n,\mathbb Z_\ell)
+\otimes_{\mathbb Z_\ell[\mu_n],\theta}\mathcal O.
+\end{equation*}
+It is free of rank two, and its reduction depends only on the reduced character. A \(p\)-power root of unity reduces to \(1\) in characteristic \(p\); a third root reduces to \(1\) in characteristic \(3\). This proves the three congruences without dividing by \(n\).
+\end{proof}
+
+\subsection*{Local conditions}
+
+\begin{proposition}\label{prop:2.2}
+At every place \(v_0\) dividing \(3p\) there is a nonempty open subset \(\Omega_{v_0}\) of \(U(K_{v_0})\) on which all four systems have the reduction category determined by \(E\): potentially good ordinary, potentially good supersingular, or potentially multiplicative. In the multiplicative case, every rank-two system has monodromy of rank one, at every coefficient prime.
+\end{proposition}
+
+\begin{proof}
+Move the marked point toward \(O\) on the fixed curve \(E\). The compact-type degeneration has Jacobian \(E^n\) \cite[Proposition~3.3]{O}. The local stability results of \cite[\S7]{O} provide neighborhoods with the stated ordinary, supersingular, or totally toric behavior. Intersect the neighborhoods needed for the finitely many completions of \(F\) above \(v_0\).
+
+At a point outside the ramification locus of \(x\), the local inverse function theorem gives an analytic section \((t,y(t))\), with \(y(t)^2=h(t)\). The map \((x,y)\mapsto(x,y(t)y)\) identifies \(B_t\) with \(E\) and identifies their normalized covering constructions. This gives \(\Omega_{v_0}\).
+
+The ordinary filtration respects the rotations and induces the required filtration on each character space. In the supersingular case, all Newton slopes are \(1/2\), excluding an ordinary weight-zero line after finite extension. In the totally toric case, the full monodromy has rank \(n\). It is the direct sum of \(n\) rank-two nilpotent operators, each of rank at most one; all have rank one.
+\end{proof}
+
+\subsection*{Simultaneous specialization}
+
+\begin{proposition}\label{prop:2.3}
+The prime \(p\) and a parameter \(t\in U(K)\) can be chosen so that:
+\begin{enumerate}
+\item all the local conditions of Proposition~\ref{prop:2.2} hold;
+\item the residual representations used in the \(p,3,p\) chain are absolutely irreducible over the corresponding cyclotomic fields and decomposed generic over \(F\);
+\item \(A_t[5]\) is decomposed generic over \(K\), and its image is \(\mathrm{SL}_2(\mathbb F_5)\) when \(\mu_5\subset K\);
+\item finitely many further nonempty local parameter opens, away from \(3p\), may be prescribed.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Write \(d_K=[K:\mathbb Q]\) and let \(N\) be the normal closure of \(K\). Serre's open-image theorem \cite{S72} allows us to choose \(p>100\) so that every conjugate \(E^\sigma\) has image containing \(\mathrm{SL}_2(\mathbb F_p)\) over \(N\) and
+\begin{equation*}
+\frac{2d_Kp}{p^2-1}<1.
+\end{equation*}
+Put \(D=N(\mu_{15p})\). Since \(D/N\) is abelian and \(\mathrm{SL}_2(\mathbb F_p)\) is perfect, the image of each \(E^\sigma[p]\) over \(D\) is exactly \(\mathrm{SL}_2(\mathbb F_p)\). There are \(p^2\) matrices of each trace \(2\) and \(-2\) in this group. Hence the proportion with repeated eigenvalues is \(2p/(p^2-1)\). In any subgroup of the product surjecting onto every factor, the union bound gives an element with distinct eigenvalues in every coordinate. Chebotarev produces rational primes split completely in \(D\) with that simultaneous property. Scalar quadratic twists preserve eigenvalue ratios, so this proves the required assertions for \(V_1\) modulo \(p\).
+
+For the varying systems, consider \((m,\ell)=(3,p),(3,5),(p,3)\). The common-basis monodromy calculation \cite[Theorem~4.5]{O} supplies opposite unipotents on each nontrivial \(\lambda\)-character space:
+\begin{equation*}
+T_a=\begin{pmatrix}1&s c_\lambda\\0&1\end{pmatrix},
+\qquad T_b=\begin{pmatrix}1&0\\u c_\lambda&1\end{pmatrix},
+\qquad c_\lambda=2-\lambda-\lambda^{-1},\quad s,u\in\{1,-1\}.
+\end{equation*}
+For \(m=3\), the coefficient is \(3\). These matrices generate \(\mathrm{SL}_2(\mathbb F_5)\) in characteristic \(5\). The word \(T_aT_b^2\) has trace \(20\) or \(-16\), distinct from \(\pm2\) in characteristics \(5\) and \(p>100\). For \((m,\ell)=(p,3)\), use \(T_aT_b\). A repeated eigenvalue would force \(\lambda\) to satisfy a polynomial of degree at most four over \(\mathbb F_3\). Then \(p\) divides \(3^e-1\) for some \(e\leq4\), impossible for \(p>100\). Thus one word is regular semisimple on every nontrivial character space for each pair.
+
+Let \(W=\operatorname{Res}(K/\mathbb Q)U\). It is an open subset of affine \(d_K\)-space and, over \(D\), is the product of the conjugate parameter curves. Record the finite monodromy representations of all three pairs on all factors in a single finite quotient \(H\) of \(\pi_1(W)\), taking the normal core of their common kernel. Include the quotient \(\operatorname{Gal}(D/\mathbb Q)\). A loop supported on one factor acts trivially on the others, so \(H\) contains the simultaneous regular-semisimple elements and the individual opposite unipotents.
+
+Hilbert irreducibility with weak approximation \cite[Proposition~3.3.1 and Theorem~3.5.3]{SG}, \cite[Lemma~8.3]{O} gives \(x\in W(\mathbb Q)\) whose specialization onto \(H\) is surjective and which meets every prescribed local open. Its corresponding parameter is a single \(t\in U(K)\). Since the specialization respects \(\operatorname{Gal}(D/\mathbb Q)\), the image of \(G_D\) is precisely the kernel \(H_D\).
+
+The opposite unipotents in \(H_D\) have distinct fixed lines, proving absolute irreducibility over \(G_D\). Since \(D\) contains \(F(\mu_\ell)\) for each coefficient prime \(\ell\in\{3,p\}\) in the congruence chain, this implies absolute irreducibility over the required cyclotomic fields. The simultaneous regular-semisimple elements, and their conjugacy classes in \(H\), yield decomposed genericity by Chebotarev: they lie in \(H_D\), so the resulting rational primes split completely in \(D\), and hence have residue cardinality \(1\) modulo the relevant coefficient prime. The use of every conjugate factor ensures the property at every place above the chosen rational prime, both over \(F\) for the congruence chain and over \(K\) for \(A_t[5]\).
+
+Here \(\ell\) does not divide \(m\), so character projectors on \(C_m\) commute with reduction. Their rational identifications with the corresponding spaces on \(C_n\) give the desired semisimplified reductions, even when \(\ell\) divides \(n\). This is separate from the evaluation-lattice argument of Proposition~\ref{prop:2.1}.
+\end{proof}
+
+
+\section{A Steinberg place in characteristic five}
+\label{sec:3}
+
+We now work in characteristic \(5\). The essential local condition is that inertia remain unipotent and residually nontrivial.
+
+\begin{lemma}\label{lem:3.1}
+Let \(F_v\) have residue characteristic different from \(5\) and contain \(\mu_5\). Suppose that, for tame inertia and arithmetic Frobenius generators,
+\begin{equation*}
+\bar\rho(\tau)=U=\begin{pmatrix}1&1\\0&1\end{pmatrix},
+\qquad \bar\rho(\phi)=1,
+\qquad \phi\tau\phi^{-1}=\tau^{q_v}.
+\end{equation*}
+
+Fix an unramified determinant \(\psi\) lifting \(\det\bar\rho\). The framed deformation condition in which every inertia element has characteristic polynomial \((X-1)^2\) is formally smooth:
+\begin{equation*}
+R_v^{\square,\mathrm{St},\psi}\simeq\mathcal O[[a,u,z]].
+\end{equation*}
+
+For \(M=\operatorname{ad}^0\bar\rho\), put \(e=E_{12}\), \(f=E_{21}\), and \(h=\operatorname{diag}(1,-1)\). Then
+\begin{align*}
+H^1(F_v,M)&=k[(f,0)]\oplus k[(0,e)],\\
+\mathcal L_v&=k[(0,e)],
+\qquad \dim_k\mathcal L_v=h^0(F_v,M)=1.
+\end{align*}
+
+A pair records the cocycle values on \((\tau,\phi)\), and \(\mathcal L_v\) is the tangent space of the Steinberg condition.
+\end{lemma}
+
+\begin{proof}
+For \(D=\operatorname{Ad}(U)\), direct calculation gives \(D(e)=e\), \(D(h)=h-2e\), and \(D(f)=f+h-e\). Hence \(M^D=ke\), \((D-1)M=ke\oplus kh\), and \((D-1)^3=0\). In characteristic \(5\), the norm \(1+D+\cdots+D^4\) is zero. Since \(q_v\equiv1\) modulo \(5\), the sum of the first \(q_v\) powers of \(D\) is the identity.
+
+Applying a cocycle to the tame relation gives \((D-1)c(\phi)=0\). Coboundaries change \(c(\tau)\) by \((D-1)M\) and leave \(c(\phi)\) unchanged. Wild inertia and the prime-to-\(5\) tame subgroup contribute no cohomology. This proves the description of \(H^1\).
+
+For the integral statement, let \(A\) be an Artinian coefficient algebra and put \(N=\rho(\tau)-1\). Cayley--Hamilton gives \(N^2=0\). Its upper-right entry is a unit, so
+\begin{equation*}
+N=\begin{pmatrix}a&b\\-a^2/b&-a\end{pmatrix},
+\qquad a\in\mathfrak m_A,\quad b\in1+\mathfrak m_A.
+\end{equation*}
+
+The strict basis change \((Ne_2,e_2)\) makes \(N=E_{12}\). The tame relation then forces
+\begin{equation*}
+\rho(\phi)=\begin{pmatrix}q_vd&z\\0&d\end{pmatrix},
+\qquad d^2=\psi(\phi)/q_v.
+\end{equation*}
+
+The square root congruent to \(1\) is unique. Setting \(u=b-1\), we obtain the unrestricted parameters \(a,u,z\) in the displayed presentation. The lifted wild and prime-to-\(5\) inertial subgroups are trivial, since they map to the pro-\(5\) kernel of reduction.
+
+For a first-order cocycle \(x=c(\tau)\), the trace condition is \(\operatorname{tr}(xU)=0\). It removes exactly the \(f\)-coordinate. The remaining inertia variation is a coboundary; after removing it, \(c(\phi)\) is an arbitrary multiple of \(e\). This proves the tangent assertion.
+
+Finally, \(\ker N=\operatorname{im}N=A(Ne_2)\) is a rank-one direct summand. It is the unique such summand on which inertia acts trivially. This kernel description applies over nonreduced coefficient algebras.
+\end{proof}
+
+\begin{lemma}\label{lem:3.2}
+Choose a primitive fifth root of unity to identify \(\mathbb F_5(1)\) with \(\mathbb F_5\), and extend scalars to \(k\). This identifies \(M(1)\) with \(M\). Under local Tate duality, \(\mathcal L_v\) is its own annihilator. A class with nonzero restriction to inertia therefore fails the dual Steinberg condition.
+\end{lemma}
+
+\begin{proof}
+The trace form on \(\operatorname{ad}^0\) is invariant, symmetric, and nondegenerate. Local Tate duality and graded commutativity give a nondegenerate alternating pairing on the two-dimensional \(H^1(F_v,M)\). Every line is its own annihilator, and Lemma~\ref{lem:3.1} identifies \(\mathcal L_v\) with the unramified line.
+\end{proof}
+
+\subsection*{Excluding the exceptional classes}
+
+Let \(F\) contain \(\mu_5\), and let \(\bar\rho:G_F\to\mathrm{SL}_2(\mathbb F_5)\) be surjective. Let \(S\) contain its ramification and the places above \(5\). Fix a nonempty set \(P\subset S\) at which Lemma~\ref{lem:3.1} applies. Put \(M=\operatorname{ad}^0\bar\rho\). Let \(D_{\mathrm{Sel}}\) be a subspace of \(H^1(G_{F,S},M)\) satisfying the dual Steinberg condition at \(P\).
+
+\begin{lemma}\label{lem:3.3}
+If \(L/F\) is cut out by \(\bar\rho\) and \(C_N=F(\mu_{5^N})\), then restriction to \(G_{LC_N}\) is injective on \(D_{\mathrm{Sel}}\), for every \(N\geq1\).
+\end{lemma}
+
+\begin{proof}
+The group \(G=\mathrm{SL}_2(\mathbb F_5)\) is perfect, whereas \(C_N/F\) is abelian. Thus \(L\cap C_N=F\). Since \(M^G=0\), inflation identifies
+\begin{equation*}
+H^1(\operatorname{Gal}(LC_N/F),M)\simeq H^1(G,M).
+\end{equation*}
+
+The subgroup \(\langle U\rangle\) has index \(24\). Restriction--corestriction therefore makes restriction to this Sylow \(5\)-subgroup injective. The cyclic cohomology calculation gives
+\begin{equation*}
+H^1(\langle U\rangle,M)
+=\ker(1+D+\cdots+D^4)/(D-1)M=k[f].
+\end{equation*}
+
+At a protected place, residual inertia maps onto a conjugate of \(\langle U\rangle\), and inflation to inertia is injective. Every nonzero inflated finite-group class consequently has nonzero inertial restriction, contrary to Lemma~\ref{lem:3.2}. Inflation--restriction for \(G_{LC_N}\) now proves the claim.
+\end{proof}
+
+\begin{lemma}\label{lem:3.4}
+At every cyclotomic depth \(N\), Taylor--Wiles primes can be chosen to kill the relative dual Selmer group for any framing set disjoint from \(P\). They can be chosen of degree one over \(\mathbb Q\) and outside any prescribed finite set.
+\end{lemma}
+
+\begin{proof}
+Let \(\kappa\) be a nonzero relative dual Selmer class. By Lemma~\ref{lem:3.3} its restriction to \(G_{LC_N}\) is a nonzero homomorphism. The \(k\)-span of its image is \(G\)-stable, by the cocycle identity, and equals \(M\) because the adjoint representation of \(\mathrm{SL}_2(\mathbb F_5)\) is absolutely irreducible.
+
+Take \(g=\operatorname{diag}(2,3)\), and choose \(\sigma\in G_{C_N}\) with residual image \(g\). The coinvariants \(M/(\operatorname{Ad}(g)-1)M\) are the diagonal line. Multiplying \(\sigma\) by an element of \(G_{LC_N}\) changes \(\kappa(\sigma)\) by a value whose possible \(k\)-span is \(M\). We can therefore make its image in the coinvariants nonzero.
+
+Chebotarev in the finite quotient recording \(\kappa\), \(\bar\rho\), and \(C_N\) gives a positive-density set of detecting primes \(w\) with \(q_w\equiv1\) modulo \(5^N\) and distinct residual eigenvalues. Exclude also every prime above a rational prime ramified in \(F\). Primes of degree greater than one over \(\mathbb Q\) have density zero among the primes of \(F\), so \(w\) may have degree one. Its rational residue characteristic is then unramified and has residue degree one in every imaginary quadratic subfield of \(F\), and therefore splits in each of them.
+
+These evaluation maps separate the dual Selmer group. Choose enough independent evaluations and add further primes to obtain a fixed sufficiently large cardinality \(r\). At a Taylor--Wiles prime, the fixed-determinant local condition has the full two-dimensional tangent space: unramified and tame diagonal variations. Its dual condition is zero. An augmented dual Selmer class is therefore unramified at each added prime, belongs to the original group, and vanishes by the selected evaluations.
+\end{proof}
+
+\section{Automorphy lifting with a retained Steinberg place}
+\label{sec:4}
+
+We formulate the lifting result in the prepared setting needed for the application. This keeps the local conditions and the patching calculation explicit.
+
+Let \(F\) be CM with \(\mu_5\subset F\), and put \(d=[F^+:\mathbb Q]\). Choose a decomposition
+\begin{gather*}
+S=S_5\sqcup R\sqcup P,\qquad
+S_5=S_5^{\mathrm{cr}}\sqcup S_5^{\mathrm{st}},\\
+P\ne\varnothing,\qquad P^c\cap S=\varnothing.
+\end{gather*}
+
+All places of \(R\cup P\) are prime to \(5\). Impose the following field conditions:
+\begin{itemize}
+\item Every rational prime below \(S\) or ramifying in \(F\) splits in an imaginary quadratic subfield of \(F\).
+
+\item For each place \(\bar v\) above \(5\) of \(F^+\) there is a different place \(\bar v'\) above \(5\) such that
+\begin{equation*}
+\sum_{\substack{\bar w\mid5\\\bar w\ne\bar v,\bar v'}}
+[F^+_{\bar w}:\mathbb Q_5]>\frac d2.
+\end{equation*}
+
+\item Every residue field above \(5\) is larger than \(\mathbb F_5\).
+\end{itemize}
+
+These are the field and local-degree conditions used for the integral comparisons in \cite[\S5.6, (5)--(6)]{CN}.
+
+Let \(\bar\rho:G_{F,S}\to\mathrm{SL}_2(\mathbb F_5)\) be surjective and decomposed generic. It is trivial at \(S_5\cup R\) and has the local form of Lemma~\ref{lem:3.1} at \(P\). Suppose that a cuspidal weight-zero representation \(\pi\) of \(\mathrm{PGL}_2(\mathbb A_F)\) realizes \(\bar\rho\). Require \(\pi\) to be unramified outside \(R\cup P\cup S_5^{\mathrm{st}}\) and to have Iwahori invariants there. Its Galois representation is Barsotti--Tate at \(S_5^{\mathrm{cr}}\) and unipotently ramified at \(R\cup P\). At \(S_5^{\mathrm{st}}\), require \(\pi\) to be \(\iota\)-ordinary and its Galois representation to be noncrystalline ordinary.
+
+At \(S_5^{\mathrm{cr}}\) and \(S_5^{\mathrm{st}}\) use the local rings \(R_v^{\mathrm{BT}}\) and \(R_v^\triangle\) of \cite[\S5.3]{CN}. At \(v\in R\) use the character-type ring \(R_v^{\varepsilon_5^{-1},\chi_v}\), where \(\chi_v\) is tame and congruent to \(1\) modulo \(\varpi\). At \(P\) use the Steinberg ring of Lemma~\ref{lem:3.1}. Denote the resulting global deformation problem by \(\mathcal S_\chi\).
+
+\subsection*{Integral Hecke maps}
+
+\begin{lemma}\label{lem:4.1}
+For every Taylor--Wiles datum \(Q\) satisfying Lemma~\ref{lem:3.4}, and every character tuple \(\chi\), there is a surjective \(\mathcal O[\Delta_Q]\)-algebra map
+\begin{gather*}
+R_{\mathcal S_{\chi,Q}}\longrightarrow
+\mathbb T_{\chi,Q}/J_{\chi,Q},\\
+J_{\chi,Q}^{\delta}=0,
+\qquad \Delta_Q=\prod_{w\in Q}k(w)^\times(5),
+\end{gather*}
+
+where \(\delta\) is independent of the level and \(\chi\). The map matches Frobenius characteristic polynomials and satisfies the reduction and augmentation compatibilities of \cite[\S6.4.1]{ACC}.
+
+Here the complexes and derived Hecke images are those of \cite[\S5.6]{CN}, with full Iwahori level and trivial coefficient character at \(P\), coefficient character \(\chi^{-1}\) at \(R\), and the parabolics and ordinary projectors determined by the decomposition of \(S_5\). The places in \(P^c\) are hyperspecial. Taylor--Wiles primes are chosen outside \(S\cup S^c\).
+\end{lemma}
+
+\begin{proof}
+Write
+\begin{equation*}
+S_{\mathrm{aux}}=(S\cup Q)\cup(S\cup Q)^c,
+\qquad R_{\mathrm{aux}}=R\cup P\cup Q.
+\end{equation*}
+The first set is used to construct Galois representations and is stable under complex conjugation. It is distinct from the framing set used below. At every place of \(R_{\mathrm{aux}}^c\setminus R_{\mathrm{aux}}\), the level is hyperspecial. In the notation of \cite[\S3.1]{ACC}, the set outside which the resulting representation is unramified is therefore
+\begin{equation*}
+S_{\mathrm{aux}}\setminus
+ (R_{\mathrm{aux}}^c\setminus R_{\mathrm{aux}})=S\cup Q.
+\end{equation*}
+The field hypotheses of that result hold at \(R\cup P\), and Lemma~\ref{lem:3.4} supplies them at \(Q\). In particular, applying \cite[Theorem~3.1.1]{ACC} removes ramification at \(P^c\); unramifiedness there is part of the theorem, not a consequence of an identity of inertial characteristic polynomials.
+
+We describe the passage of the required identities between Hecke algebras. First work at a neat \(\mathrm{GL}_2\) level, keeping the full Iwahori subgroup at \(P\). On one fixed localized complex let \(H\) be the image of the original commuting Hecke operators, and let \(H_{\mathrm{ext}}\) be the image after adjoining the torus operators \(t_{v,i}(\sigma)\) of \cite[\S2.2.4]{ACC}, for \(v\in R_{\mathrm{aux}}\). Localize the extended algebra over the original maximal ideal, retaining all its local factors. This gives an actual inclusion \(H\subset H_{\mathrm{ext}}\), as in \cite[\S3.1]{ACC}. Operators and ordinary projectors at \(5\) commute with these prime-to-\(5\) operators, so they may be retained throughout, by scalar extension and passage to the corresponding direct summands.
+
+There are representations over \(H/I\) and \(H_{\mathrm{ext}}/J\) with the prescribed Frobenius polynomials, where \(I^a=J^b=0\) and \(a,b\) are bounded independently of the level. The first is furnished by the Galois-representation construction underlying \cite[Proposition~5.5.2]{CN}; the second is furnished by \cite[Theorem~3.1.1]{ACC}. Set
+\begin{equation*}
+L=IH_{\mathrm{ext}}+J,
+\qquad K=H\cap L.
+\end{equation*}
+Then \(I\subset K\), \(L^{a+b-1}=0\), and
+\begin{equation*}
+K^{a+b-1}=0,
+\qquad H/K\hookrightarrow H_{\mathrm{ext}}/L.
+\end{equation*}
+After extension to the ring on the right, the two representations have the same characteristic polynomials by Chebotarev and continuity. Absolute residual irreducibility identifies them up to conjugation on each complete local factor \(A\): after identifying their residual representations over its residue field \(k_A\), apply \cite[Lemma~2.1.10]{CHT} to the pair representation over \(A\times_{k_A}A\) and the diagonal subring \(A\). Equality of traces puts the pair's traces in that subring, and descent to it gives the required conjugacy. Thus the unramifiedness assertion also descends through this injection.
+
+For \(v\in P\), an inertial element corresponds under local reciprocity to a unit of \(F_v\). At full Iwahori level with trivial coefficient character, each diagonal unit has Hecke action \(1\). Consequently the polynomial in \cite[(2.2.7)]{ACC} is \((X-1)^2\), and its Theorem~3.1.1 gives the integral identity
+\begin{equation*}
+\det(X-\rho(\sigma))=(X-1)^2\qquad(\sigma\in I_v).
+\end{equation*}
+It descends coefficient by coefficient to \(H/K\). Since the residual matrix \(\bar\rho(\tau_v)-1\) has a unit entry, Lemma~\ref{lem:3.1} identifies the local representation over this possibly nonreduced ring with a point of the integral Steinberg deformation functor.
+
+For clarity, the remaining comparisons use equivariant cohomology, not a direct map from the cohomology of a neat cover to that of its quotient. If \(K'\) is a neat normal subgroup of \(K_0\), the actual Hecke images fit into the span
+\begin{equation*}
+H(K')\longleftarrow H(K_0/K')\longrightarrow H(K_0).
+\end{equation*}
+The left arrow forgets the finite group action and has a nilpotent kernel of exponent bounded by the cohomological range; the right arrow is induced by derived invariants. These are the maps described after \cite[Lemma~2.2.3]{ACC}. Write \(B=H(K_0/K')\), and write the arrows onto their images as \(a:B\twoheadrightarrow H_{\mathrm{neat}}\) and \(b:B\twoheadrightarrow H_{\mathrm{target}}\). With \(E=\ker a\), there is a well-defined map
+\begin{equation*}
+H_{\mathrm{neat}}=B/E\longrightarrow
+H_{\mathrm{target}}/b(E).
+\end{equation*}
+If the representation over \(H_{\mathrm{neat}}\) is defined modulo a nilpotent ideal \(I\), quotient the target further by \(b(a^{-1}(I))\), and also by its original Galois-representation ideal \(J_0\). These are nilpotent ideals: if \(I^i=0\) and \(E^e=0\), then \((a^{-1}(I))^{ie}=0\). The two representations on this common quotient have equal Frobenius polynomials and hence are identified by absolute residual irreducibility. Consequently the identities already proved for the source representation hold for the original target representation after this quotient. This operation never lifts a Galois representation through a nilpotent kernel.
+
+Apply this construction with the rank-one coefficient module \(\mathcal O(\chi^{-1})\), made trivial on the covering subgroup, and with the quotient \(\Delta_Q\) retained. The change of coefficients is the derived finite-group construction, so no averaging over a group of order divisible by \(5\) is used. It gives the coefficient and diamond versions of the span; these are the constructions in \cite[Propositions~6.5.3 and 6.5.11]{ACC} and \cite[Lemma~5.2]{AKT}. Localizations at the chosen distinct eigenvalues at \(Q\) commute with these maps. The identity at \(P\) is unchanged, since the coefficient character there is trivial and none of these level changes alters its full Iwahori subgroup.
+
+To obtain neat levels, choose two auxiliary rational primes, split completely in \(F\) and outside \(S_{\mathrm{aux}}\). For the sequence of Taylor--Wiles sets used below, they may be fixed first and excluded when those sets are chosen. Impose sufficiently small principal congruence level at one of them at a time. Each construction permits additional ramification only at its own auxiliary prime. On the common quotient by the two resulting nilpotent ideals, equality of Frobenius polynomials identifies the representations by absolute residual irreducibility; the representation is therefore unramified at both auxiliary primes. This is the level-removal argument used in \cite[\S3.2]{ACC} and in the proof of \cite[Theorem~5.8]{AKT}. The nilpotence bounds depend on the cohomological range, not the indices of these covers.
+
+Finally take the preimages in \(\mathrm{GL}_2\) of the required \(\mathrm{PGL}_2\) levels. Apply the equivariant comparison to the bounded neat-cover complex, and take cohomology after derived invariants to reach the \(\mathrm{GL}_2\) cohomology Hecke image. No cohomological bound is needed for this latter space, whose centre can contain \(5\)-torsion. The centres act trivially on the coefficient module. The order of the centre of \(\mathrm{SL}_2\) is \(2\), which is invertible in \(\mathcal O\), so \cite[Corollary~5.5]{AKT} gives the surjection from that cohomology Hecke image to the \(\mathrm{PGL}_2\) image. The localized \(\mathrm{PGL}_2\) complexes have a uniform cohomological bound by \cite[Theorem~5.11]{AKT}, since \(\mu_5\subset F\), the residual representation is absolutely irreducible, and the coefficients reduce to the trivial module. On these bounded complexes, \cite[Lemma~2.2.3]{ACC} bounds the kernel from the derived Hecke image to its cohomology image; pulling back the quotient ideal therefore gives a uniformly nilpotent ideal in the derived algebra \(\mathbb T_{\chi,Q}\). These operations justify the transfer in the statement without assuming an inclusion between Hecke algebras attached to different complexes.
+
+At \(5\), the local comparison is \cite[Theorem~4.2.15]{CN}; its field, degree, residue-field, and decomposed-generic hypotheses hold by assumption. At \(R\), the same torus-polynomial calculation gives the character-type condition. At \(Q\), the distinct residual eigenvalues identify the two local characters and their diamond actions, as in \cite[Proposition~6.5.11]{ACC}. The fixed determinant and the resulting surjective deformation-ring map are obtained from these constructions as in \cite[Propositions~5.5.2 and 5.6.2--5.6.3]{CN}; the additional condition established here only takes a quotient of its target. Combining the finitely many nilpotent ideals above gives a uniformly nilpotent ideal \(J_{\chi,Q}\). The resulting map factors through \(R_{\mathcal S_{\chi,Q}}\), remains surjective, and is \(\mathcal O[\Delta_Q]\)-linear.
+
+For compatibility, the coefficient systems for \(\chi\) and \(1\) have the same reduction modulo \(\varpi\). The derived change-of-coefficient isomorphism identifies the actions of the same abstract Hecke and diamond operators, and hence their common reduced image \(\overline{\mathbb T}_Q\). The two maps agree after passage to
+\begin{equation*}
+\overline{\mathbb T}_Q/
+(\overline J_{\chi,Q}+\overline J_{1,Q}).
+\end{equation*}
+Indeed, their Frobenius traces and determinants agree, so absolute residual irreducibility identifies the unframed deformations. The protected quotient is identical in the two problems. Under the augmentation isomorphism of \cite[Lemma~5.6.4]{CN}, the same operators and Frobenius polynomials agree after killing the diamond variables. Quotienting by the image of the finite-level nilpotent ideal and the original-level ideal gives equality of the corresponding unframed deformations. These are exactly the reduction and augmentation compatibilities required in \cite[\S6.4.1, (5) and the subsequent augmentation conditions]{ACC}.
+\end{proof}
+
+\subsection*{The lifting theorem}
+
+\begin{theorem}\label{thm:4.2}
+In the prepared setting above, let \(\rho:G_F\to\mathrm{GL}_2(\overline{\mathbb Q}_5)\) be continuous, with residual representation \(\bar\rho\) and determinant \(\varepsilon_5^{-1}\). Suppose that:
+\begin{enumerate}[label=\arabic*.]
+\item \(\rho\) is unramified outside \(S\) and unipotently ramified at \(R\cup P\);
+
+\item at \(S_5^{\mathrm{cr}}\), it is Barsotti--Tate, and is ordinary exactly where \(r_\iota(\pi)\) is ordinary;
+
+\item at \(S_5^{\mathrm{st}}\), it is a noncrystalline extension of \(\varepsilon_5^{-1}\) by the trivial character.
+\end{enumerate}
+
+Then \(\rho\) is automorphic of weight zero.
+\end{theorem}
+
+\begin{proof}
+Put \(T=S\setminus P=S_5\cup R\), \(t=|T|\), and \(M=\operatorname{ad}^0\bar\rho\). Thus \(T\) is nonempty. We frame at \(T\), keeping the Steinberg condition at \(P\) in every global deformation functor. In the notation of \cite[\S A.2]{AKT}, the relative dual Selmer group for an augmented problem is
+\begin{equation*}
+\ker\left(
+H^1(G_{F,S\cup Q},M(1))\longrightarrow
+\prod_{v\in P\cup Q}
+H^1(F_v,M(1))/\mathcal L_v^\perp
+\right).
+\end{equation*}
+Omitting a local factor from the framing base thus retains its dual condition in this kernel. Lemma~\ref{lem:3.2} applies at \(P\), while \(\mathcal L_w^\perp=0\) at every Taylor--Wiles prime \(w\).
+
+Lemma~\ref{lem:3.4} supplies sets \(Q_N\) of a fixed sufficiently large cardinality \(r\) for which this group vanishes. The generator and Euler formulas of \cite[Proposition~A.4(1)--(2)]{AKT} give a presentation over the relative local base with
+\begin{align*}
+g={}&-h^0(F,M(1))-1+t
+-\sum_{v\mid\infty}h^0(F_v,M)\\
+&\hspace{16mm}+\sum_{v\in P\cup Q_N}
+\bigl(\dim_k\mathcal L_v-h^0(F_v,M)\bigr),
+\end{align*}
+and hence
+\begin{equation*}
+g=r-3d-1+t.
+\end{equation*}
+Here the global invariant term vanishes, the \(d\) complex places each contribute \(3\), a Taylor--Wiles place has tangent dimension \(2\) and invariant dimension \(1\), and a protected place has both dimensions equal to \(1\). Increase \(r\) if necessary to make \(g\) nonnegative. The generator-surjection assertion in Proposition~A.4(1) needs no local smoothness hypothesis. We do not invoke its stronger assertion about the number of relations, and do not assume unrestricted local \(H^2\)-vanishing at \(P\).
+
+For each \(\chi\), form
+\begin{equation*}
+R_{\mathrm{loc},\chi}
+=\widehat\bigotimes_{v\in T}R_{v,\chi}.
+\end{equation*}
+
+\looseness=-1
+The protected conditions remain imposed in \(R_{\mathcal S_\chi}\); their rings are absent only from the relative local base. At \(R\) choose a second tuple \(\chi\) with \(\chi_v^2\ne1\) and \(\chi_v\equiv1\) modulo \(\varpi\), enlarging \(\mathcal O\) as needed. Such characters exist because \(q_v\equiv1\) modulo \(5\). The two local problems have identified reductions modulo \(\varpi\).
+
+Use the localized complexes and the finite-level maps of Lemma~\ref{lem:4.1}. Perfectness at the original, possibly non-neat, level follows from \cite[Proposition~5.5.3]{CN}. Perfectness over \(\mathcal O[\Delta_{Q_N}]\) and the identification of the Taylor--Wiles augmentation with the original complex are supplied by \cite[Lemma~5.6.4]{CN}, using \cite[Theorem~5.11]{AKT}.
+
+Partial framing adds \(4t-1\) variables \cite[Lemma~6.2.4]{ACC}. Let \(\mathcal A\) be that power-series ring over \(\mathcal O\) and set
+\begin{align*}
+S_\infty&=\mathcal A[[\mathbb Z_5^r]],\\
+R_\infty&=R_{\mathrm{loc},1}[[x_1,\ldots,x_g]],\\
+R'_\infty&=R_{\mathrm{loc},\chi}[[x_1,\ldots,x_g]].
+\end{align*}
+
+For each \(N\), the presentations above give surjections from these power-series rings onto the corresponding \(T\)-framed global rings. Choose a common relative cotangent-space basis at the original level and lifts giving generators for the two original-level rings, compatible modulo \(\varpi\). The augmentation from each framed augmented ring to its original-level ring is surjective, and so is its map on relative cotangent spaces. Extend lifts of the fixed original basis to a basis of the augmented relative cotangent space, choosing the remaining vectors in the augmentation kernel. The preceding presentation bound gives at most \(g\) basis elements, so pad the lists, including the original-level list, with zeros to obtain \(g\) generators. The actual lifts can be chosen with both the fixed augmentation values and common reductions modulo \(\varpi\): for a surjection \(B_N\to B_0\), the map
+\begin{equation*}
+B_N\longrightarrow B_0\times_{B_0/\varpi}(B_N/\varpi)
+\end{equation*}
+is surjective. Apply this to the framed rings and their primed counterparts. The resulting presentations are compatible both modulo \(\varpi\) and with augmentation; the identification between framed and unframed rings also respects the \(4t-1\) framing variables. This supplies the presentation data in \cite[\S6.4.1, (3)--(4) and its augmentation conditions]{ACC}. Lemma~\ref{lem:4.1} supplies the compatible Hecke maps, so the abstract patching construction of \cite[\S6.4]{ACC} applies with this framing algebra. Its augmentation maps give
+\begin{equation*}
+R_\infty/\mathfrak a_\infty\twoheadrightarrow R_{\mathcal S_1},
+\qquad
+R'_\infty/\mathfrak a_\infty\twoheadrightarrow R_{\mathcal S_\chi}
+\end{equation*}
+\cite[Lemma~6.4.15]{ACC}. In particular, the target defines a point of the patched spectrum.
+
+The local dimensions give
+\begin{gather*}
+\dim R_{\mathrm{loc},1}=1+3t+2d,\\
+\dim R_\infty=r+4t-d,
+\qquad \dim S_\infty=r+4t.
+\end{gather*}
+
+The same formulas hold for the primed problem. Thus the dimension deficit is \(d\). No unrestricted local \(H^2\)-vanishing is required at \(P\): its imposed quotient is smooth and its relative Euler contribution is zero.
+
+We apply the support argument of \cite[\S5.4]{CN}. The local component and specialization properties at \(5\) are \cite[Proposition~5.3.2 and Lemmas~5.3.3--5.3.4]{CN}. The character-type properties at \(R\) are \cite[Lemma~A.2]{AKT}; in the primed base those factors are irreducible. After enlarging coefficients, the relevant components may be taken geometrically irreducible. These facts verify the component hypotheses of \cite[Assumption~5.4.1]{CN}.
+
+The source \(\pi\) gives a nonzero automorphic point. Characteristic-zero cohomology is concentrated in the usual interval of length \(d\). Source and target lie on matching components at \(5\): ordinary or nonordinary at the crystalline places, and noncrystalline ordinary at the others. There are no protected-place component labels in the local base.
+
+A source component and a component containing the target consequently specialize to the same primed component. Proposition~5.4.2 of \cite{CN} transfers support to the target component, and its Corollary~5.4.3 preserves support at augmentation. Hence the target occurs in characteristic-zero automorphic cohomology. The identification of Hecke eigenvalues with Frobenius traces gives a cuspidal weight-zero \(\Pi\) with \(r_\iota(\Pi)\simeq\rho\).
+\end{proof}
+
+
+\section{Constructing the modular auxiliary curve}
+\label{sec:5}
+
+Throughout this section, assume \(\mu_5\subset K\). We produce the protected place on \(A_t\) and then apply Theorem~\ref{thm:4.2}.
+
+\subsection*{A multiplicative degeneration of width three}
+
+\begin{lemma}\label{lem:5.1}
+The family \(A_t\) admits a split multiplicative local specialization with minimal discriminant valuation prime to \(5\). It can be imposed at one place \(v\) over a rational prime \(q\geq 7\), while \(A_t\) has good reduction at every other place over \(q\). These conditions are compatible with Proposition~\ref{prop:2.3}.
+\end{lemma}
+
+\begin{proof}
+In the covering family choose a boundary point \(R_0\) of exact order \(6p\), so that \([3p]R_0\) is nonzero \(2\)-torsion. The branch sections \(S\) and \(-S\) collide. After blowing up the collision and normalizing the degree-three cover, the main component is a connected étale elliptic cover. Its defining torsion class is \(-2pR_0\), of exact order \(3\). A rational tail meets this component in three nodes, each of thickness one.
+
+The involution exchanges two nodes and fixes the third. On both branches of the fixed node it acts as \(-1\). Its local quotient changes \(xy=s\) to \(uv=s^2\). The exchanged pair contributes one node of thickness one. The quotient components are rational; resolving the thickness-two node produces a cycle of three rational components. Thus the degeneration has type \(I_3\).
+
+The normalization \(f(O)=1\) gives the section represented by \((O,1)\), so the genus-one quotient and its Jacobian have the same degeneration. Since \(R_0\) is not \(2\)-torsion, the \(x\)-coordinate is étale there; passage to the \(t\)-parameter preserves the width.
+
+Choose a finite number field over which \(R_0\), the components, the nodes, and their individual branches are defined. Spread the semistable model and its smoothing parameter \(s\) out over a ring of integers with finitely many primes inverted. Enlarge this finite set so that the node and branch data and the stated thicknesses persist, \(E\) has good reduction, and the nonzero leading coefficient of \(j(A_t)^{-1}\) at \(s=0\) is a unit. Choose \(q\geq 7\), different from \(5\) and \(p\), outside this set and split completely in the chosen field and the normal closure of \(K\). The resulting \(I_3\) degeneration is split at the selected place \(v\). Its inverse \(j\)-invariant has order three in \(s\); the inverse Tate \(j\)-series, or equivalently Tate uniformization \cite[Chapter~V]{Si}, therefore gives, on a sufficiently small \(v\)-adic neighborhood,
+\begin{equation*}
+q_{A_t}=c s^3 h(s),\qquad
+c\in\mathcal O_v^\times,\qquad h(0)=1.
+\end{equation*}
+
+Shrink the neighborhood so that \(h(s)\) is a unit. Choose \(v(s)=k>0\) sufficiently large with \(5\nmid k\). Then \(A_t\) is split multiplicative and \(v(\Delta_{\min})=3k\) is prime to \(5\). These are open local conditions. At all other \(q\)-places, including \(v^c\), use the near-\(O\) good-reduction open; the choice of \(q\) ensures that \(E\) has good reduction there and \(v\neq v^c\). Proposition~\ref{prop:2.3} permits all these conditions together.
+\end{proof}
+
+In a split Tate curve, residual inertia is nontrivial unipotent precisely when its discriminant valuation is nonzero modulo \(5\). Since \(\mu_5\subset K\), residual Frobenius has diagonal entries \(1\); changing its tame lift by a power of inertia makes it the identity. Thus the protected place has exactly the form used in Lemma~\ref{lem:3.1}.
+
+\subsection*{A modular source and the prepared field}
+
+\begin{proposition}\label{prop:5.2}
+Let \(A/K\) be an elliptic curve with full \(\mathrm{SL}_2(\mathbb F_5)\) residual image, decomposed generic residual representation, and a protected place as in Lemma~\ref{lem:5.1}. There is a finite solvable CM extension \(F/K\) over which \(H^1(A)\) and a modular elliptic curve satisfy the hypotheses of Theorem~\ref{thm:4.2}. Every completion above the selected rational prime \(q\) can be kept unchanged.
+\end{proposition}
+
+\begin{proof}
+We use the proof of the modular-source construction \cite[Proposition~6.1.5]{CN}, which allows an arbitrary finite Galois avoid field and finitely many nonempty local opens. Let \(M=K(A[5])\), and choose a finite Galois extension \(D/K^+\) containing \(M\) and any further avoid data. Choose a finite set \(V\) of places witnessing the residual image and decomposed genericity, away from \(2,3,5,q\) and the rational primes of bad reduction of \(A\). Include all places above the rational primes so chosen. In particular, \(V\) contains every place above a rational decomposed-generic witness. The image witnesses may be chosen to detect every proper intermediate field of \(M/K\), as in \cite[\S6.5.12]{ACC}.
+
+We first make the preliminary base change in the cited modular-source proof explicitly over \(K^+\). At each relevant finite place \(u\) of \(K^+\), prescribe a finite Galois local extension containing the local fields and the required auxiliary extensions for every place of \(K\) above \(u\). Thus, at a split pair \(v,v^c\), take a compositum of the prescriptions for both places and its local Galois closure; the two residual representations need not coincide. Above \(2,3,5\), these prescriptions make \(A[5]\) trivial and satisfy the preliminary local conditions of \cite[Proposition~6.1.5]{CN}. Above \(5\), they also give \(A\) good reduction or split multiplicative reduction according to its category, and residue fields larger than \(\mathbb F_5\). At every place above \(q\) or below \(V\), prescribe the trivial extension, and at every real place prescribe \(\mathbb R\).
+
+The exact local prescription lemma \cite[Lemma~4.1.2]{CHT} gives a totally real, solvable Galois extension \(E_0^+/K^+\), linearly disjoint from \(D\), with these completions. Put \(L_0=KE_0^+\). Then \(L_0/K\) is solvable Galois and CM. Disjointness gives \(L_0\cap M=K\), so the residual image remains full. Every \(q\)-completion is unchanged, and every place of \(V\) splits completely. At \(q\) we impose no condition trivializing the residual representation: its nontrivial inertia at the distinguished place is retained.
+
+Now apply the weak approximation and Hilbert irreducibility step on the rational twisted modular curve \(X(5)\), with the prescribed reduction categories at \(5\). Add the split-Tate open at every place above the distinguished \(v\), good-reduction opens at the other \(q\)-places, and good-reduction opens at the places above \(V\). The added opens are nonempty because \(A\) supplies local points, and their residue characteristics are disjoint from the mandatory \(2\)-, \(3\)-, and \(5\)-adic conditions. The proof of \cite[Proposition~6.1.5]{CN} therefore gives a modular elliptic curve \(B/L_0\), with \(B[5]\simeq A[5]\), satisfying these conditions. Its residual image is full and remains decomposed generic.
+
+Prepare both \(A\) and \(B\) at their remaining bad places away from the protected set. Choose local extensions making their common residual representation trivial and both reductions semistable. They may be enlarged to finite Galois extensions. Apply the same construction again over \(K^+\): for each place of \(K^+\), combine the required local extensions for all places of \(L_0\) above it before taking the local Galois closure. Keep trivial prescriptions above \(q\) and below \(V\), and real infinite completions. Apply \cite[Lemma~4.1.2]{CHT} with an avoid field containing a Galois closure of \(L_0M/K^+\). If \(E_1^+\) is the resulting totally real extension, replace \(L_0\) by \(L_0E_1^+\). These composita are Galois and solvable over \(K\); disjointness preserves the full residual image, and splitting at \(V\) preserves decomposed genericity. The source stays modular by solvable base change \cite[Proposition~6.5.13]{ACC}; its residual full image ensures that the base change remains cuspidal.
+
+Next adjoin a totally real multiquadratic extension of \(\mathbb Q\) of degree eight, disjoint from the fields already used and split at \(5\), \(q\), and the rational primes below \(V\). Such extensions follow from weak approximation for square classes, with new auxiliary ramification ensuring independence. Each \(5\)-adic local degree is then at most one eighth of the global real degree.
+
+This ratio cannot increase under further extension: a local degree grows by at most the global degree. Omitting any two \(5\)-adic places therefore leaves at least \(3d/4\), giving the strict inequality required in \S\ref{sec:4}.
+
+Finally, use the imaginary-quadratic helper construction of \cite[\S6.5.12]{ACC}, incorporating \(q\) and the rational primes below \(V\) into its finite splitting prescriptions. It arranges that every rational prime below the final deformation set, or ramifying in \(F\), splits in an imaginary quadratic subfield of \(F\). In particular, the relevant places split over \(F^+\). The helpers are quadratic over \(\mathbb Q\), so the final extension \(F/K\) remains Galois and solvable, and all its \(q\)-completions remain unchanged. The full residual image survives these final solvable Galois extensions as well: a nontrivial intersection with the residual field would give a nontrivial solvable quotient of the perfect group \(\mathrm{SL}_2(\mathbb F_5)\).
+
+Let \(P\) be the places above the original distinguished \(v\); their conjugates remain good for both curves and lie outside \(S\). Let \(R\) be the union of the remaining bad places of \(A\) and \(B\), away from \(5\) and \(P\). Then \(S=S_5\sqcup R\sqcup P\), the residual representation is trivial at \(S_5\cup R\), and the source is unramified outside \(R\cup P\cup S_5^{\mathrm{st}}\) with Iwahori invariants on that set. At \(P\) both curves remain split Tate curves with nontrivial residual inertia. At \(5\) their ordinary, nonordinary, and noncrystalline ordinary categories match. For the modular source, the good and multiplicative reduction conditions give the required unramified and ordinary automorphic local conditions by \cite[Lemmas~6.1.3 and~6.1.7]{CN}. These are all the hypotheses of Theorem~\ref{thm:4.2}.
+\end{proof}
+
+\begin{corollary}\label{cor:5.3}
+The parameter in Proposition~\ref{prop:2.3} can be chosen so that \(A_t\) is modular over \(K\).
+\end{corollary}
+
+\begin{proof}
+Add the local opens of Lemma~\ref{lem:5.1} to the specialization. Proposition~\ref{prop:2.3} gives the full residual image and decomposed genericity. Proposition~\ref{prop:5.2} supplies a modular source and the prepared field. Theorem~\ref{thm:4.2} applied to \(H^1(A_t)\) proves automorphy over that field. Solvable descent \cite[Proposition~6.5.13]{ACC} gives modularity over \(K\). The residual full image also excludes geometric CM, so the resulting representation is cuspidal.
+\end{proof}
+
+\section{Completion of the proof}
+\label{sec:6}
+
+We first record how automorphy moves between coefficient primes.
+
+\begin{lemma}\label{lem:6.1}
+Suppose that a system \(V_\theta\) from Proposition~\ref{prop:2.1} is realized by a weight-zero cuspidal automorphic representation \(\pi\) with trivial central character at one coefficient prime. Then \(\pi\) realizes the entire compatible system. At every place covered by Proposition~\ref{prop:2.2}, its local parameter has zero monodromy in the potentially good case and Steinberg type in the potentially multiplicative case.
+\end{lemma}
+
+\begin{proof}
+The good-place characteristic polynomials of \(V_\theta\) determine those of every coefficient realization of \(\pi\). Semisimplicity, Chebotarev, and Brauer--Nesbitt identify the representations at all coefficient primes. Existence of these Galois representations is the CM Galois-representation theorem \cite{HLTT}.
+
+For the local assertion, compare at an auxiliary coefficient prime different from the residue characteristic. Semisimplified local--global compatibility identifies the underlying semisimple Weil representation \cite{V}. In the potentially good case, after a finite extension the two geometric Frobenius eigenvalues have the same complex absolute value. Nonzero rank-two monodromy would force their ratio to be a nontrivial norm character, contradicting that equality. Thus the automorphic monodromy is zero.
+
+In the potentially multiplicative case, the geometric monodromy has rank one and the two Weil characters differ by the norm. The zero-monodromy parameter with these characters corresponds to a nongeneric one-dimensional representation. Since a cuspidal \(\mathrm{GL}_2\) representation is locally generic, \(\pi_v\) is a Steinberg twist. Its trivial central character makes the twisting character quadratic or trivial. The local calculation \cite[Lemma~9.2(ii)]{O} gives weight-zero ordinariness, including for ramified quadratic twists; compare \cite[Lemma~6.1.3(4)]{CN}.
+\end{proof}
+
+\Needspace{5\baselineskip}
+\begin{proposition}\label{prop:6.2}
+If \(\mu_5\subset K\) and \(E/K\) has no geometric complex multiplication, then \(E\) is modular.
+\end{proposition}
+
+\begin{proof}
+Choose \(p\) and \(t\) as in Proposition~\ref{prop:2.3} and Corollary~\ref{cor:5.3}. Put \(F=K(\mu_{3p})\), \(A=A_t\), and \(B=B_t\). This is an abelian CM extension. Base-change the cuspidal representation of \(A\) to \(F\). Its Galois representation remains absolutely irreducible, so the base change is cuspidal. It realizes \(V_\eta\).
+
+We apply \cite[Theorem~5.2]{CN} three times:
+\begin{equation*}
+V_\eta\ \xrightarrow{\ p\ }\ V_{\eta\psi}
+\ \xrightarrow{\ 3\ }\ V_\psi
+\ \xrightarrow{\ p\ }\ V_1.
+\end{equation*}
+
+Proposition~\ref{prop:2.1} supplies determinant \(\varepsilon_\ell^{-1}\), labelled weights \(\{0,1\}\), finite ramification, and potential semistability. It also supplies the residual match. For the first step, the common residual representation comes from \(C_3\) modulo \(p\); for the second, from \(C_p\) modulo \(3\); for the last, from \(B\) modulo \(p\). Proposition~\ref{prop:2.3} gives absolute irreducibility over the cyclotomic fields and decomposed genericity in each case. At a change of coefficient prime, Lemma~\ref{lem:6.1} supplies the automorphic source at the new prime.
+
+At a potentially ordinary place, source and target are potentially crystalline and potentially ordinary. At a supersingular place, both are potentially crystalline and neither is potentially ordinary. In both cases the source's automorphic monodromy is zero. At a potentially multiplicative place, both are noncrystalline and the source is ordinary of Steinberg type. Thus Proposition~\ref{prop:2.2} and Lemma~\ref{lem:6.1} give all local hypotheses of the lifting theorem. The coefficient primes are \(3\) and \(p>100\), so its exceptional mod-\(5\) clause never occurs.
+
+The last step makes \(H^1(B/F)\) automorphic. Undoing the quadratic twist gives automorphy of \(H^1(E/F)\). Descend through a cyclic tower for \(F/K\). At each step, the prescribed Galois representation makes the automorphic representation invariant by strong multiplicity one, so cyclic base change supplies a cuspidal descent \cite{AC}; \cite[Proposition~6.5.13]{ACC}.
+
+For clarity, the finite-character correction is determined by the Galois representation. Two extensions of the same absolutely irreducible representation of a finite-index normal subgroup differ by a character of the finite quotient: after identifying their restrictions, Schur's lemma makes their pointwise discrepancy scalar. Twisting the descended automorphic representation by the inverse corresponding Hecke character removes that discrepancy. Every intermediate field is CM, and the required Galois representations exist. This gives precisely \(H^1(E/K)\).
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:1.1}]
+First suppose \(E\) has no geometric CM. The field \(K'=K(\mu_5)\) is CM and abelian over \(K\). Proposition~\ref{prop:6.2} applies to \(E/K'\), and the same solvable descent gives its modularity over \(K\).
+
+Agreement of the compatible systems identifies the elliptic local parameters, including monodromy, by \cite[Lemma~6.1.3]{CN}. This gives the stated local factors and conductor. The determinant \(\varepsilon_\ell^{-1}\) identifies the unitary central character as trivial.
+
+Now suppose that \(E\) has geometric complex multiplication by an imaginary quadratic field \(M\). Its endomorphisms are defined over \(KM\). The main theorem of complex multiplication supplies the corresponding algebraic Hecke characters \cite[Chapter~II, \S\S9--10]{Si}. If \(M\subset K\), \(H^1(E)\) is a sum of two characters and the associated automorphic representation is their isobaric sum. Otherwise \(KM/K\) is quadratic and \(H^1(E)\) is induced from one character of \(KM\). Quadratic automorphic induction gives a cuspidal representation over \(K\) \cite{AC}. The two infinity characters are distinct, so the character is not invariant under the nontrivial automorphism of \(KM/K\). The CM theorem and compatibility of induction identify the local parameters.
+\end{proof}
+
+\clearpage
+\begin{thebibliography}{HLTT}
+
+\bibitem[O]{O}
+OpenAI.
+\emph{Modularity of elliptic curves over imaginary quadratic fields}.
+Preprint, 4 October 2026, 30 pp.
+\href{https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Modularity-of-elliptic-curves-over-imaginary-quadratic-fields-October-4-2026/paper.pdf}{Cited version and source repository}.
+Cited source version: repository commit {\small\texttt{adc7f1241b42e322a6451854ab7e4b4c146bf78a}}.
+
+\bibitem[CN]{CN}
+Ana Caraiani and James Newton.
+\emph{On the modularity of elliptic curves over imaginary quadratic fields}.
+arXiv:2301.10509v3, 27 March 2025.
+\href{https://arxiv.org/html/2301.10509v3}{Version used for the theorem numbering}.
+
+\bibitem[ACC]{ACC}
+Patrick B. Allen, Frank Calegari, Ana Caraiani, Toby Gee, David Helm, Bao V. Le Hung, James Newton, Peter Scholze, Richard Taylor, and Jack A. Thorne.
+\emph{Potential automorphy over CM fields}.
+Annals of Mathematics (2) \textbf{197} (2023), no. 3, 897--1113.
+\href{https://doi.org/10.4007/annals.2023.197.3.2}{doi:10.4007/annals.2023.197.3.2}.
+\href{https://people.mpim-bonn.mpg.de/scholze/CMPotAut.pdf}{Full text}.
+
+\bibitem[AKT]{AKT}
+Patrick B. Allen, Chandrashekhar Khare, and Jack A. Thorne.
+\emph{Modularity of \(\mathrm{GL}_2(\mathbb F_p)\)-representations over CM fields}.
+Cambridge Journal of Mathematics \textbf{11} (2023), no. 1, 1--158.
+\href{https://doi.org/10.4310/cjm.2023.v11.n1.a1}{doi:10.4310/cjm.2023.v11.n1.a1}.
+\href{https://arxiv.org/abs/1910.12986v2}{Preprint}.
+
+\bibitem[CHT]{CHT}
+Laurent Clozel, Michael Harris, and Richard Taylor.
+\emph{Automorphy for some \(l\)-adic lifts of automorphic mod \(l\) Galois representations}.
+Publications Mathématiques de l'IHÉS \textbf{108} (2008), 1--181.
+\href{https://doi.org/10.1007/s10240-008-0016-1}{doi:10.1007/s10240-008-0016-1}.
+
+\bibitem[AC]{AC}
+James Arthur and Laurent Clozel.
+\emph{Simple Algebras, Base Change, and the Advanced Theory of the Trace Formula}.
+Annals of Mathematics Studies \textbf{120}, Princeton University Press, 1989.
+\href{https://www.jstor.org/stable/j.ctt1bd6kj6}{Publisher record}.
+
+\bibitem[S72]{S72}
+Jean-Pierre Serre.
+\emph{Propriétés galoisiennes des points d'ordre fini des courbes elliptiques}.
+Inventiones Mathematicae \textbf{15} (1972), no. 4, 259--331.
+\href{https://doi.org/10.1007/BF01405086}{doi:10.1007/BF01405086}.
+
+\bibitem[SG]{SG}
+Jean-Pierre Serre.
+\emph{Topics in Galois Theory}.
+Second edition, with notes by Henri Darmon.
+Research Notes in Mathematics \textbf{1}, A K Peters, 2008.
+
+\bibitem[F]{F}
+Gerd Faltings.
+\emph{Endlichkeitssätze für abelsche Varietäten über Zahlkörpern}.
+Inventiones Mathematicae \textbf{73} (1983), no. 3, 349--366; erratum, \textbf{75} (1984), 381.
+\href{https://doi.org/10.1007/BF01388432}{Article};
+\href{https://doi.org/10.1007/BF01388572}{erratum}.
+
+\bibitem[HLTT]{HLTT}
+Michael Harris, Kai-Wen Lan, Richard Taylor, and Jack Thorne.
+\emph{On the rigid cohomology of certain Shimura varieties}.
+Research in the Mathematical Sciences \textbf{3} (2016), Paper No. 37, 308 pp.
+\href{https://doi.org/10.1186/s40687-016-0078-5}{doi:10.1186/s40687-016-0078-5}.
+
+\bibitem[V]{V}
+Ila Varma.
+\emph{Local-global compatibility for regular algebraic cuspidal automorphic representations when \(\ell\neq p\)}.
+Forum of Mathematics, Sigma \textbf{12} (2024), Paper No. e21, 32 pp.
+\href{https://doi.org/10.1017/fms.2024.7}{doi:10.1017/fms.2024.7}.
+
+\bibitem[Si]{Si}
+Joseph H. Silverman.
+\emph{Advanced Topics in the Arithmetic of Elliptic Curves}.
+Graduate Texts in Mathematics \textbf{151}, Springer-Verlag, 1994.
+\href{https://doi.org/10.1007/978-1-4612-0851-8}{doi:10.1007/978-1-4612-0851-8}.
+
+\end{thebibliography}
+
+\end{document}
