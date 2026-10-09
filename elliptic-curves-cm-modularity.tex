@@ -1,5 +1,6 @@
 % Standalone LaTeX source. Compile twice with pdfLaTeX.
 % Typeset from the source manuscript, dated 7 October 2026.
+% Attribution revision, 9 October 2026.
 % Source: https://chatgpt.com/space/page_d287e2f173b48191a4a4f6ac4abb49f2
 \documentclass[11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
@@ -19,7 +20,7 @@
 \definecolor{linkblue}{RGB}{30,64,103}
 \hypersetup{
   pdftitle={Every Elliptic Curve over a CM Number Field Is Modular},
-  pdfsubject={Mathematical manuscript dated 7 October 2026},
+  pdfsubject={First version 7 October 2026; attribution revision 9 October 2026},
   colorlinks=true,
   linkcolor=linkblue,
   citecolor=linkblue,
@@ -62,13 +63,13 @@
 {\LARGE\bfseries Every Elliptic Curve over a\\[3pt]
 CM Number Field Is Modular\par}
 \vspace{12pt}
-{\small 7 October 2026\par}
+{\small First version 7 October 2026\\[2pt]Attribution revision 9 October 2026\par}
 \end{center}
 \vspace{5pt}
 
 
 \begin{abstract}
-We prove that every elliptic curve over a CM number field is modular. The proof combines the covering construction of OpenAI with a mod-5 automorphy lifting argument that retains a residually ramified Steinberg place. The local condition at this place excludes the exceptional cohomology classes for \(\mathrm{SL}_2(\mathbb F_5)\). Partial framing then supplies Taylor--Wiles presentations with the required dimension, while integral local--global compatibility imposes the same Steinberg condition on the Hecke-valued representations. A specialization of the covering family produces a modular auxiliary elliptic curve and three congruences, in characteristics \(p\), \(3\), and \(p\), connecting it to the original curve. The construction works over non-Galois CM fields and includes fields containing fifth roots of unity.
+We prove that every elliptic curve over a CM number field is modular. The proof combines the covering construction of OpenAI with a mod-5 automorphy lifting argument that retains a residually ramified Steinberg place. Following a method of Taylor and Khare--Thorne, the local condition at this place excludes the exceptional cohomology classes for \(\mathrm{SL}_2(\mathbb F_5)\). Partial framing then supplies Taylor--Wiles presentations with the required dimension, while integral local--global compatibility imposes the same Steinberg condition on the Hecke-valued representations. A specialization of the covering family produces a modular auxiliary elliptic curve and three congruences, in characteristics \(p\), \(3\), and \(p\), connecting it to the original curve. The construction works over non-Galois CM fields and includes fields containing fifth roots of unity.
 \end{abstract}
 
 \section{Introduction}
@@ -83,7 +84,7 @@ Every elliptic curve \(E\) over a CM number field \(K\) is modular. If \(E\) has
 If \(E\) has geometric complex multiplication, the corresponding automorphic representation is obtained from its Hecke characters. It is cuspidal when the endomorphisms are not all defined over \(K\); otherwise it is an isobaric sum of two characters.
 \end{theorem}
 
-The new arithmetic ingredient is Theorem~\ref{thm:4.2} below. Its residual image is \(\mathrm{SL}_2(\mathbb F_5)\), and the field contains \(\mu_5\). This is precisely the exceptional configuration excluded by the mod-5 clause of the usual lifting theorem \cite[Theorem~5.2]{CN}. We retain a place where inertia has nontrivial unipotent residual image. The Steinberg tangent condition there is the unramified line, whereas every nonzero exceptional finite-group cohomology class restricts to the ramified line. This removes the obstruction before Taylor--Wiles primes are chosen.
+The characteristic-five argument uses the exceptional-cohomology method of Taylor \cite[\S1, condition E3 and Lemma~1.2]{Tay03}, developed further by Khare--Thorne \cite[Introduction and Propositions~6.6 and~6.10]{KT}. We formulate the retained-Steinberg variant needed here in Theorem~\ref{thm:4.2}. Our auxiliary family supplies a place with nontrivial unipotent residual inertia. Retaining the Steinberg condition at this place excludes the exceptional classes from dual Selmer before Taylor--Wiles primes are chosen. Sections~\ref{sec:3}--\ref{sec:4} give the local calculation and its integration into the CM-field patching argument.
 
 The protected place belongs to an auxiliary curve, so the theorem imposes no restriction on the reduction of \(E\). The geometric family has a split multiplicative degeneration of width three. Specializing near it makes the auxiliary discriminant valuation prime to \(5\). At the same time, specialization near a different boundary preserves the reduction categories needed in the congruence argument.
 
@@ -194,6 +195,12 @@ Here \(\ell\) does not divide \(m\), so character projectors on \(C_m\) commute 
 \section{A Steinberg place in characteristic five}
 \label{sec:3}
 
+After the cyclotomic twist described below, the local deformation condition used in our fixed-determinant application is the residually ramified form of Taylor's condition E3 \cite[\S1, condition E3]{Tay03}. The exclusion of finite-group cohomology classes is closely related to Taylor's Lemma~1.2 \cite{Tay03} and the dual-Selmer argument of Khare--Thorne, Propositions~6.6 and~6.10 \cite{KT}. We give the local calculation and resulting Taylor--Wiles prime selection explicitly in the form needed for the CM application.
+
+The local and global settings differ. Taylor's proof of Lemma~1.2 first removes exceptional classes from ordinary Selmer using a place where the residual representation is unramified and the projective Frobenius has order five. Khare--Thorne work over totally real fields with exceptional projective \(S_5\) image; their relevant auxiliary local condition has unramified residual inertia and nontrivial unipotent residual Frobenius. Here the field is CM and contains \(\mu_5\), the residual image is \(\mathrm{SL}_2(\mathbb F_5)\), and the retained place has nontrivial unipotent residual inertia and trivial residual Frobenius. We use their method, while keeping the local and CM-field patching arguments in Sections~\ref{sec:3}--\ref{sec:4}.
+
+For the comparison with Taylor's determinant convention, twisting by \(\varepsilon_5\) changes our determinant \(\varepsilon_5^{-1}\) to \(\varepsilon_5\); since the field contains \(\mu_5\), the residual twist is trivial. The projective image is \(A_5\). The central subgroup of order two acts trivially on the adjoint module, and its order is invertible in characteristic five, so passage to the projective image does not change the relevant finite-group cohomology.
+
 We now work in characteristic \(5\). The essential local condition is that inertia remain unipotent and residually nontrivial.
 
 \begin{lemma}\label{lem:3.1}
@@ -273,6 +280,8 @@ H^1(\langle U\rangle,M)
 
 At a protected place, residual inertia maps onto a conjugate of \(\langle U\rangle\), and inflation to inertia is injective. Every nonzero inflated finite-group class consequently has nonzero inertial restriction, contrary to Lemma~\ref{lem:3.2}. Inflation--restriction for \(G_{LC_N}\) now proves the claim.
 \end{proof}
+
+The following prime-selection argument is the retained-Steinberg version of the dual-Selmer strategy in Khare--Thorne \cite[Propositions~6.6 and~6.10]{KT}; we retain the proof to make the hypotheses used here explicit.
 
 \begin{lemma}\label{lem:3.4}
 At every cyclotomic depth \(N\), Taylor--Wiles primes can be chosen to kill the relative dual Selmer group for any framing set disjoint from \(P\). They can be chosen of degree one over \(\mathbb Q\) and outside any prescribed finite set.
@@ -594,7 +603,10 @@ Now suppose that \(E\) has geometric complex multiplication by an imaginary quad
 \end{proof}
 
 \clearpage
-\begin{thebibliography}{HLTT}
+\subsection*{Acknowledgments}
+We thank the GitHub user \texttt{toby-gee} for pointing out the relevant precedents in the work of Taylor and Khare--Thorne in \href{https://github.com/CaptainSude/elliptic-curves-cm-modularity/issues/1}{issue~1}.
+
+\begin{thebibliography}{Tay03}
 
 \bibitem[O]{O}
 OpenAI.
@@ -622,6 +634,20 @@ Patrick B. Allen, Chandrashekhar Khare, and Jack A. Thorne.
 Cambridge Journal of Mathematics \textbf{11} (2023), no. 1, 1--158.
 \href{https://doi.org/10.4310/cjm.2023.v11.n1.a1}{doi:10.4310/cjm.2023.v11.n1.a1}.
 \href{https://arxiv.org/abs/1910.12986v2}{Preprint}.
+
+\bibitem[Tay03]{Tay03}
+Richard Taylor.
+\emph{On icosahedral Artin representations, II}.
+American Journal of Mathematics \textbf{125} (2003), no.~3, 549--566.
+\href{https://doi.org/10.1353/ajm.2003.0021}{doi:10.1353/ajm.2003.0021}.
+\href{https://virtualmath1.stanford.edu/~rltaylor/artin2.pdf}{Author's manuscript}.
+
+\bibitem[KT]{KT}
+Chandrashekhar B. Khare and Jack A. Thorne.
+\emph{Automorphy of some residually \(S_5\) Galois representations}.
+Mathematische Zeitschrift \textbf{286} (2017), nos.~1--2, 399--429.
+\href{https://doi.org/10.1007/s00209-016-1766-y}{doi:10.1007/s00209-016-1766-y}.
+\href{https://arxiv.org/abs/1503.03796}{Preprint}.
 
 \bibitem[CHT]{CHT}
 Laurent Clozel, Michael Harris, and Richard Taylor.

@@ -2,7 +2,9 @@
 
 **[Read the manuscript](elliptic-curves-cm-modularity.pdf)** · **[LaTeX source](elliptic-curves-cm-modularity.tex)** · [Build instructions](#build-from-source)
 
-*Revised 7 October 2026 · 15 pages · 15 numbered results · 12 references*
+*First version 7 October 2026 · Attribution revision 9 October 2026 · 15 pages · 15 numbered results · 14 references*
+
+Attribution revision **v1.0.1**, 9 October 2026. The characteristic-five exceptional-cohomology method is credited to Taylor and Khare–Thorne. The abstract, introduction and Section 3 now explain the relationship to the retained-Steinberg argument used here. This revision changes attribution and exposition; theorem statements and proofs are unchanged. [Current release v1.0.1](https://github.com/CaptainSude/elliptic-curves-cm-modularity/releases/tag/v1.0.1) · [First release v1.0.0](https://github.com/CaptainSude/elliptic-curves-cm-modularity/releases/tag/v1.0.0).
 
 ## Overview
 
@@ -25,7 +27,9 @@ The PDF contains the full argument and bibliography. The standalone LaTeX source
 
 The manuscript received an AI-assisted internal mathematical audit, clarifying revisions, and a further team review. **No further gaps were identified in that review, assuming the correctness and applicability of the cited external inputs.** This assessment does not constitute formal verification or independent peer review.
 
-The revisions expand the Hecke-algebra comparisons, the compatibility of patching presentations with reduction and augmentation, the degeneration argument, and the field preparation. All 15 rendered pages were inspected, and theorem numbering and internal references were checked.
+The first-version revisions expand the Hecke-algebra comparisons, the compatibility of patching presentations with reduction and augmentation, the degeneration argument, and the field preparation. All 15 rendered pages of that version were inspected, and theorem numbering and internal references were checked.
+
+For the attribution revision, all 15 rendered pages were inspected, citations and links were checked, and the 15 numbered statements and 15 proof environments were compared with the first version and found unchanged. This attribution check does not constitute independent proof verification.
 
 ## Build from source
 
@@ -44,7 +48,7 @@ Alternatively, with `latexmk` installed:
 latexmk -pdf -interaction=nonstopmode -halt-on-error elliptic-curves-cm-modularity.tex
 ```
 
-The bibliography is embedded in the source. No BibTeX, Biber, external figures, or shell escape is required. The `.gitignore` excludes temporary LaTeX files while retaining the compiled PDF.
+The bibliography is embedded in the source. No BibTeX, Biber, external figures, or shell escape is required. The release package's `.gitignore` excludes temporary LaTeX files while retaining the compiled PDF.
 
 ## Principal inputs
 
@@ -54,6 +58,8 @@ The complete bibliography and precise theorem references appear in the manuscrip
 - **Ana Caraiani and James Newton**, [*On the modularity of elliptic curves over imaginary quadratic fields*](https://arxiv.org/html/2301.10509v3), version 3.
 - **Allen et al.**, [*Potential automorphy over CM fields*](https://doi.org/10.4007/annals.2023.197.3.2).
 - **Patrick B. Allen, Chandrashekhar Khare, and Jack A. Thorne**, [*Modularity of GL₂(Fₚ)-representations over CM fields*](https://arxiv.org/abs/1910.12986v2).
+- **Richard Taylor**, [*On icosahedral Artin representations, II*](https://doi.org/10.1353/ajm.2003.0021), Section 1, condition E3 and Lemma 1.2. [Author’s manuscript](https://virtualmath1.stanford.edu/~rltaylor/artin2.pdf).
+- **Chandrashekhar B. Khare and Jack A. Thorne**, [*Automorphy of some residually S₅ Galois representations*](https://doi.org/10.1007/s00209-016-1766-y), introduction and Propositions 6.6 and 6.10. [Preprint](https://arxiv.org/abs/1503.03796).
 
 ## Mathematical feedback
 
